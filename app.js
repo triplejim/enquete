@@ -31,7 +31,6 @@ if ('development' == app.get('env')) {
 app.get('/', enquete.enquete_list);
 app.get('/users', user.list);
 app.get('/enquete:id', enquete.enquete_page);
-app.get('/end_enquete:id', enquete.ended_enquete_page);
 app.post('/enquete_vote', enquete.enquete_vote);
 app.post('/end_enquete_vote', enquete.end_enquete_vote);
 app.post('/add_choices', enquete.add_choices);

@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 var Enquete = model.Enquete;
 var Vote = model.Vote;
 
-// 有効なアンケートのリストを表示する
+// アンケートのリストを表示する
 exports.enquete_list = function(req, res){
 	Enquete.find({}, function(err, docs){
 		if(err)
@@ -53,7 +53,7 @@ exports.end_enquete_vote = function(req, res){
 // 指定されたアンケートページの表示
 exports.enquete_page = function(req, res){
 	var enquete_id = req.params.id;
-	Enquete.findOne({_id: enquete_id}, function(err, doc){
+	Enquete.findOne({_id: enquete_id}, function(err, enquete_doc){
 		if(err)
 			throw err;
 
@@ -61,23 +61,11 @@ exports.enquete_page = function(req, res){
 			if(err)
 				throw err;
 
-			res.render('enquete_page', { enquete_title: doc.title, enquete_raws: docs, enquete_id: enquete_id});
-		});
-	})
-}
-
-// 指定されたアンケートページの表示
-exports.ended_enquete_page = function(req, res){
-	var enquete_id = req.params.id;
-	Enquete.findOne({_id: enquete_id}, function(err, doc){
-		if(err)
-			throw err;
-
-		Vote.find({ enquete_id: enquete_id}, null,  {sort: {count: -1}}, function(err, docs){
-			if(err)
-				throw err;
-
-			res.render('ended_enquete_page', { enquete_title: doc.title, enquete_raws: docs, enquete_id: enquete_id});
+			// 投票の不可で分ける
+			if(enquete_doc.is_valid)
+				res.render('enquete_page', { enquete_title: enquete_doc.title, enquete_raws: docs, enquete_id: enquete_id});
+			else
+				res.render('ended_enquete_page', { enquete_title: enquete_doc.title, enquete_raws: docs, enquete_id: enquete_id});
 		});
 	})
 }

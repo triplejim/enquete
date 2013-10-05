@@ -18,13 +18,13 @@ block content
 			for item, index in end_enquete_list
 				tr
 					td 
-						a(href="/end_enquete"+item._id) #{item.title}
+						a(href="/enquete"+item._id) #{item.title}
 
 	br
 
 	新しくアンケートを作成しませんか？
 	div.create_enquete
-		form(name="create_enquete", action="/ended_enquete", method="post")
+		form(name="create_enquete", action="/create_enquete", method="post")
 			input(type="text", name="title" value="タイトル")
 			input(type="submit" value="作成")
 
