@@ -73,16 +73,15 @@ exports.enquete_page = function(req, res){
 // アンケートの投票
 exports.enquete_vote = function(req, res){
 	var body = req.body;
-	console.log(body.radio);
 
-	Vote.findOne({_id: body.radio}, function(err, doc){
+	Vote.findOne({_id: body.vote_id}, function(err, doc){
 		if(err)
 			throw err;
 
 		// 投票数を1増やす
 		doc.count = doc.count + 1;
 
-		Vote.update({_id: body.radio}, {$set: {count: doc.count}},
+		Vote.update({_id: body.vote_id}, {$set: {count: doc.count}},
 			{upsert: false, multi: false}, function(err){
 			if(err)
 				throw err;
@@ -90,8 +89,6 @@ exports.enquete_vote = function(req, res){
 			res.send("投票を完了しました");
 		});
 	});
-
-	res.send("投票を完了しました");
 }
 
 // 選択肢の追加

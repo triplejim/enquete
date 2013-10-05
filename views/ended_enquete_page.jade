@@ -11,7 +11,7 @@ block content
 				for item, index in enquete_raws
 					tr
 						td
-							input(type="radio", name="radio" value= item._id)
+							input(type="radio", name="vote_id" value= item._id)
 						td= item.choices_name
 						td= item.count
 					
