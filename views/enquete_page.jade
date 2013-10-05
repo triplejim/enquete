@@ -1,0 +1,36 @@
+extends layout
+block content
+	h2 #{enquete_title}
+	if enquete_raws.length!=0
+		form(name="vote", action="./enquete_vote" method="post")
+			table
+				th= ''
+				th= '選択肢'
+				th= '得票数'
+				for item, index in enquete_raws
+					tr
+						td
+							input(type="radio", name="radio" value= item._id)
+						td= item.choices_name
+						td= item.count
+						
+			input(type="submit", value="投票")
+	else
+		選択肢がありません。
+
+	br
+	br
+
+	新しく選択肢を追加しますか？
+	div.add_choices
+		form(name="add_choices", action="./add_choices", method="post")
+			input(type="hidden", name="enquete_id", value= enquete_id)
+			input(type="text", name="choices_name" value="選択肢")
+			input(type="submit" value="送信")
+
+	br
+	br
+
+	form(name="vote", action="./end_enquete_vote" method="post")
+			input(name="enquete_no", type="hidden", value= enquete_id)
+			input(type="submit", value="アンケートの投票を終了させる")

@@ -1,0 +1,17 @@
+extends layout
+block content
+
+	h2 #{enquete_title}
+	if enquete_raws.length!=0
+		form(name="vote", action="./enquete_vote" method="post")
+			table
+				th= ''
+				th= '選択肢'
+				th= '得票数'
+				for item, index in enquete_raws
+					tr
+						td
+							input(type="radio", name="radio" value= item._id)
+						td= item.choices_name
+						td= item.count
+					
